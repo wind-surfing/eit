@@ -81,8 +81,8 @@ const Navbar = () => {
         )}
       >
         <header className="relative">
-          <MaxWidthWrapper>
-            <div className="border-b border-border">
+          <div className="border-b border-border">
+            <MaxWidthWrapper>
               <div className="flex h-14 items-center">
                 <button
                   type="button"
@@ -225,8 +225,8 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </MaxWidthWrapper>
+            </MaxWidthWrapper>
+          </div>
         </header>
       </div>
     </>

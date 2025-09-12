@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EIT
 
-## Getting Started
+EIT is a website and abbreviation for Everest IT Club, where learning enthusiasts can log in, and explore the endless possiblilities of knowledge.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Showcase the projects (Under development)
+- Explore the resource library (Under development)
+- Create and read Blogs
+- Participate in meaningful events (Under development)
+- Gain the position at Hall of Fame (Under development)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Meeting
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Physically at EEBSS (Everest English Boarding Secondary School)
+- Digitally at Online Platforms (In future: Everest IT Club Website)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Associations
 
-## Learn More
+- Github
+- Youtube
+- Instagram
+- Twitter
+- Facebook
+- NPM
+- HackClub
 
-To learn more about Next.js, take a look at the following resources:
+## Hackclub
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Currently, any user logged in to EIT are getting member role, from which they can join the hackclub for EIT. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- https://eit.vercel.app/blogs/join-hackclub
+- https://dashboard.hackclub.com/club-dashboard/211
 
-## Deploy on Vercel
+## Contributors
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Me - Authentication, Landing Page (Inclusive of all components except the mentioned ones), Blogs page, Home page, Navbar, CommandMenu, VerificationBadge, actions, provider, hooks, contexts, schemas (except userProfile), styles (except authentication & input), APIs (except error & preflight), actions, sendEmail, config, and the rest (besides mentioned below)
+- AI - Schema, RPCs, authError, Error & Preflight route, userProfile (I amnot counting the time coded by AI. So, donot count that time. ~ 40 minutes)
+- YouTube Tutorial - Authentication UI (I amnot counting the time spent on that UI as that was just copy and paste. So, donot count that time. ~ 20 minutes), Star Grid (I amnot counting the time spent on that design. So, donot count that time. ~ 10 minutes)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Time spent
+
+Raw:       + 11 hours 11 minutes
+AI:        - 40 minutes
+Auth UI:   - 20 minutes
+Star Grid: - 10 minutes
+---------------------------------------------------
+Total:     + 10 hours
+
+So, Total Time Spent is ~ 10 hours.
