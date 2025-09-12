@@ -1,4 +1,3 @@
-import StylizedLogoMark from "@/components/landing/StylizedLogoMark";
 import Link from "next/link";
 
 export default function Footer() {
@@ -14,9 +13,6 @@ export default function Footer() {
   return (
     <footer className="flex flex-col items-center justify-between gap-6 border-t border-border px-8 py-7 md:flex-row bg-background">
       <Link href="/" className="flex items-center gap-2">
-        <div className="w-8 h-8">
-          <StylizedLogoMark />
-        </div>
         <span className="font-bold text-foreground">EIT Club</span>
         <span className="sr-only">EIT Club Home Page</span>
       </Link>

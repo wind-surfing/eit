@@ -84,7 +84,7 @@ export default function AnimatedContent() {
       <div className="hero__image glass-container mx-auto mt-16 w-full max-w-6xl opacity-0">
         <div className="hero__glow absolute inset-0 -z-10 bg-primary/30 opacity-0 blur-2xl filter" />
         <Image
-          src="/hero.avif"
+          src="/hero.svg"
           alt="EIT Community Platform"
           width={1200}
           height={800}

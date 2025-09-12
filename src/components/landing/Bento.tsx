@@ -57,7 +57,7 @@ const Bento = (): JSX.Element => {
               <p>{item.description}</p>
             </div>
             <Image
-              src={`/${index + 1}.avif`}
+              src={`/feature-${index + 1}.svg`}
               alt={item.title}
               width={400}
               height={300}

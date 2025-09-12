@@ -18,7 +18,7 @@ const staticBlogs = {
     description:
       "Learn about the Entrepreneurship and Innovation Team and our mission to foster tech innovation.",
     content: AboutEITContent,
-    featuredImage: "/hero.avif",
+    featuredImage: "/lineup.svg",
   },
   "join-hackclub": {
     title: "How to Join HackClub",
@@ -27,7 +27,7 @@ const staticBlogs = {
     content: JoinHackClubContent,
     requiresAuth: true,
     authContent: JoinHackClubAuthContent,
-    featuredImage: "/workflow.avif",
+    featuredImage: "/hackclub.svg",
   },
 };
 

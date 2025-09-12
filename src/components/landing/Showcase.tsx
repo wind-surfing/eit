@@ -48,7 +48,7 @@ const Showcase = (): JSX.Element => {
         </div>
 
         <Image
-          src="/workflow.avif"
+          src="/about.svg"
           alt="EIT Community Excellence"
           width={600}
           height={400}

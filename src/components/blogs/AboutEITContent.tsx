@@ -26,15 +26,20 @@ const teamData = {
       name: "Suved Gewali",
       role: "Co-President",
       specialization: "Hardware Expert, UI/UX",
-      image: "/team/suved.jpg",
-      social: {},
+      image: "/team/suved.png",
+      social: {
+        github: "suved25",
+        website: "suved25.github.io/download-commands/",
+      },
     },
     {
       name: "Pujan Pandey",
       role: "Secretary",
       specialization: "Quantum, AI/ML",
       image: "/team/pujan.jpg",
-      social: {},
+      social: {
+        linkedin: "pujan-pandey-0583b1321",
+      },
     },
     {
       name: "Sambhav Aryal",
@@ -48,12 +53,13 @@ const teamData = {
       },
     },
     {
-      name: "Rijan",
+      name: "Rijan Dhakal",
       role: "Treasurer",
       specialization: "UI/UX, Fullstack",
       image: "/team/rijan.jpg",
       social: {
-        website: "bentotodo.netlify.app"
+        linkedin: "rijan-dhakal-949199312",
+        website: "bentotodo.netlify.app",
       },
     },
   ],
@@ -199,13 +205,13 @@ const AboutEITContent = () => {
             key={member.name}
             className="rounded-xl bg-muted/20 p-6 border border-muted/30 text-center"
           >
-            <div className="mb-4 flex justify-center">
+            <div className="mb-4 flex justify-center aspect-[15/12]">
               <Image
                 src={member.image}
                 alt={member.name}
-                width={80}
-                height={80}
-                className="rounded-xl object-cover"
+                width={100}
+                height={100}
+                className="rounded-xl object-cover w-full"
               />
             </div>
             <p className="text-lg font-medium text-foreground mb-2">

@@ -60,7 +60,7 @@ const Blogs = (): JSX.Element => {
             >
               <Image
                 src={
-                  blog.slug === "about-eit" ? "/hero.avif" : "/workflow.avif"
+                  blog.slug === "about-eit" ? "/lineup.svg" : "/hackclub.svg"
                 }
                 alt={`${blog.title} blog post`}
                 width={600}

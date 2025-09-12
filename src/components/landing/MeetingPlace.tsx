@@ -48,7 +48,7 @@ const MeetingPlace = (): JSX.Element => {
         </div>
 
         <Image
-          src="/workflow.avif"
+          src="/meet.svg"
           alt="EIT Community Excellence"
           width={600}
           height={400}

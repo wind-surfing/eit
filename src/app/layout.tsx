@@ -5,6 +5,7 @@ import "@/styles/landing-styles.css";
 import SessionProvider from "@/provider/SessionProvider";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/landing/Footer";
+import Navbar from "@/components/navigation/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <SessionProvider>
+          <Navbar />
           {children}
           <Footer />
         </SessionProvider>
