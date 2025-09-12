@@ -1,0 +1,54 @@
+.glass-container {
+  position: relative;
+}
+
+.glass-container::before {
+  position: absolute;
+  inset: -10px;
+  z-index: -10;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(241, 245, 249, 0.2);
+  background-color: rgba(226, 232, 240, 0.1);
+  backdrop-filter: blur(12px);
+  content: "";
+}
+
+.signal-line {
+  --rotation: 90deg;
+  height: 20px;
+  width: 1.5px;
+  background: linear-gradient(to top, transparent, transparent);
+  background-color: hsla(0, 0%, 100%, 0.1);
+  background-image: linear-gradient(
+    var(--rotation),
+    rgba(255, 255, 255, 0) 50%,
+    #bfdbfe 50%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  background-size: 400% 400%;
+}
+
+@media (min-width: 768px) {
+  .signal-line {
+    height: 1.5px;
+    width: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .signal-line {
+    width: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .signal-line {
+    width: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .signal-line {
+    --rotation: 0deg;
+  }
+}
