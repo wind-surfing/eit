@@ -4,6 +4,7 @@ import MeetingPlace from "@/components/landing/MeetingPlace";
 import Bento from "@/components/landing/Bento";
 import Associations from "@/components/landing/Associations";
 import CallToAction from "@/components/landing/CallToAction";
+import Blogs from "@/components/landing/Blogs";
 
 export default async function Index() {
   return (
@@ -12,6 +13,7 @@ export default async function Index() {
       <Showcase />
       <MeetingPlace />
       <Bento />
+      <Blogs />
       <Associations />
       <CallToAction />
     </div>
