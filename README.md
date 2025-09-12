@@ -29,7 +29,7 @@ EIT is a website and abbreviation for Everest IT Club, where learning enthusiast
 
 Currently, any user logged in to EIT are getting member role, from which they can join the hackclub for EIT. 
 
-- https://eit.vercel.app/blogs/join-hackclub
+- https://eit.neploom.com/blogs/join-hackclub
 - https://dashboard.hackclub.com/club-dashboard/211
 
 ## Contributors
@@ -40,11 +40,10 @@ Currently, any user logged in to EIT are getting member role, from which they ca
 
 ## Time spent
 
-Raw:       + 11 hours 11 minutes
-AI:        - 40 minutes
-Auth UI:   - 20 minutes
-Star Grid: - 10 minutes
----------------------------------------------------
-Total:     + 10 hours
+- Raw:       + 11 hours 11 minutes
+- AI:        - 40 minutes
+- Auth UI:   - 20 minutes
+- Star Grid: - 10 minutes
+- Total:     + 10 hours
 
 So, Total Time Spent is ~ 10 hours.

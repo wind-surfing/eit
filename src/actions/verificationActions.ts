@@ -123,7 +123,7 @@ export async function resendVerificationCodeAction(
         cta: {
           text: "Verify Email",
           url: `${
-            process.env.NEXTAUTH_URL || "http://localhost:3000"
+            process.env.NEXTAUTH_URL || "https://eit.neploom.com"
           }/authentication/verify-email/${data.username}?code=${
             data.verification_code
           }`,
@@ -204,7 +204,7 @@ export async function initiatePasswordResetAction(
         cta: {
           text: "Reset Password",
           url: `${
-            process.env.NEXTAUTH_URL || "http://localhost:3000"
+            process.env.NEXTAUTH_URL || "https://eit.neploom.com"
           }/authentication/reset-password?token=${data.reset_token}`,
         },
       },
@@ -305,7 +305,7 @@ export async function sendVerificationEmailAction(
         ? "reset-password-email"
         : "verify-email";
 
-    const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXTAUTH_URL || "https://eit.neploom.com";
     const dataField =
       validatedData.type === "password-reset"
         ? {
