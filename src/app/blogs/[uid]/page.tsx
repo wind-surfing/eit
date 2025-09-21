@@ -42,11 +42,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     return (
       <Bounded as="article">
         <Link
-          href="/"
+          href="/blogs"
           className="mb-8 inline-flex items-center gap-2 text-primary transition-colors hover:text-primary/80"
         >
           <FaArrowLeft className="h-4 w-4" />
-          Back to Home
+          Back to Blogs
         </Link>
 
         <div className="relative grid place-items-center text-center">
@@ -101,14 +101,14 @@ export default async function Page({ params }: { params: Promise<Params> }) {
       return (
         <Bounded as="article">
           <Link
-            href="/"
+            href="/blogs"
             className="mb-8 inline-flex items-center gap-2 text-primary transition-colors hover:text-primary/80"
           >
             <FaArrowLeft className="h-4 w-4" />
-            Back to Home
+            Back to Blogs
           </Link>
 
-          <div className="relative grid place-items-center text-center">
+          <div className="w-full relative grid place-items-center text-center">
             <StarGrid />
             <h1 className="text-7xl font-medium text-foreground">
               {blog.title}
