@@ -160,7 +160,7 @@ function ResetPasswordContent() {
   }
 
   return (
-    <div className="min-h-screen w-screen flex justify-center items-center px-4 bg-foreground text-background">
+    <div className="min-h-screen flex justify-center items-center px-4 bg-background text-foreground">
       <div className="w-full max-w-2xl mx-auto">
         <div className="flex flex-col items-center text-center space-y-4 mb-6">
           <Image src="/eit.svg" alt="EIT" width={36} height={36} />
@@ -226,7 +226,7 @@ function ResetPasswordContent() {
                 </a>
               </div>
 
-              <p className="text-sm text-background">
+              <p className="text-sm text-foreground">
                 Can&apos;t find your code?{" "}
                 <button
                   type="button"
@@ -278,7 +278,7 @@ function ResetPasswordContent() {
             <Button
               type="submit"
               disabled={submitting || (pwEmpty && cfEmpty)}
-              className="w-full sm:w-auto bg-primary text-background"
+              className="w-full sm:w-auto bg-primary text-foreground"
             >
               {submitting ? (
                 <>

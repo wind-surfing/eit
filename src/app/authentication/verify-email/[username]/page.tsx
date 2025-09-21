@@ -132,14 +132,14 @@ function Page() {
   };
 
   return (
-    <div className="min-h-screen w-screen flex justify-center items-center px-4 bg-foreground text-background">
+    <div className="min-h-screen flex justify-center items-center px-4 bg-background text-foreground">
       <div className="w-full max-w-2xl mx-auto">
         <div className="flex flex-col items-center text-center space-y-4 mb-6">
           <Image src="/eit.svg" alt="EIT" width={36} height={36} />
-          <h1 className="text-2xl sm:text-4xl font-semibold text-background">
+          <h1 className="text-2xl sm:text-4xl font-semibold text-foreground">
             We emailed you a code
           </h1>
-          <p className="text-background max-w-xl">
+          <p className="text-foreground max-w-xl">
             We&apos;ve sent an email to{" "}
             <span className="font-semibold">{recipient}</span>. Enter the code
             here or tap the button in the email to continue.
@@ -171,7 +171,7 @@ function Page() {
                 </InputOTP>
               </div>
 
-              <p id="verify-help" className="text-sm text-background mt-3">
+              <p id="verify-help" className="text-sm text-foreground mt-3">
                 If you can&apos;t see the email, check your spam or junk folder.
               </p>
               {error && (
@@ -186,7 +186,7 @@ function Page() {
             <Button
               type="submit"
               disabled={isSubmitting || code.length !== 6}
-              className="w-full sm:w-auto bg-primary text-background"
+              className="w-full sm:w-auto bg-primary text-foreground"
             >
               {isSubmitting ? (
                 <>
@@ -210,7 +210,7 @@ function Page() {
               </a>
             </div>
 
-            <p className="text-sm text-background">
+            <p className="text-sm text-foreground">
               Can&apos;t find your code?{" "}
               <button
                 type="button"

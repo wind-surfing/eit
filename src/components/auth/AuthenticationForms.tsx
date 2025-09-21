@@ -18,13 +18,22 @@ import type { AuthData } from "@/types/api.types";
 import { signIn } from "next-auth/react";
 import { resolveSignInError, mapIssuesToErrors } from "@/lib/authErrors";
 
-export default function AuthenticationForms() {
+interface AuthenticationFormsProps {
+  initialMode?: "signin" | "signup";
+}
+
+export default function AuthenticationForms({
+  initialMode = "signin",
+}: AuthenticationFormsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode);
   const [isSignInLoading, setIsSignInLoading] = useState(false);
   const [isSignUpLoading, setIsSignUpLoading] = useState(false);
   const [signInErrors, setSignInErrors] = useState<Record<string, string>>({});
   const [signUpErrors, setSignUpErrors] = useState<Record<string, string>>({});
+
+  const isSignUp = mode === "signup";
 
   const isValidSignupResponse = (user?: AuthData["user"], code?: string) => {
     return Boolean(user?.email && user?.username && code);
@@ -57,7 +66,8 @@ export default function AuthenticationForms() {
           }
         );
       }
-    } catch {
+    } catch (emailError) {
+      console.error("Email sending error:", emailError);
       toast.warning("Account created but email failed to send", {
         id: "email",
       });
@@ -69,18 +79,29 @@ export default function AuthenticationForms() {
 
     try {
       const formValues = {
-        identifier: formData.get("identifier") as string,
-        password: formData.get("password") as string,
+        identifier: (formData.get("identifier") as string)?.trim() || "",
+        password: (formData.get("password") as string) || "",
       };
 
       const validation = signInSchema.safeParse(formValues);
 
       if (!validation.success) {
-        setSignInErrors(mapIssuesToErrors(validation.error.issues));
-        const firstError =
-          validation.error.issues[0]?.message ||
-          "Please fix the validation errors";
-        toast.error(firstError);
+        console.log("Sign-in validation failed:", validation.error.issues);
+        console.log("Sign-in form values:", formValues);
+        const errors = mapIssuesToErrors(validation.error.issues);
+        setSignInErrors(errors);
+        toast.error("Please fix the validation errors");
+        return;
+      }
+
+      if (!formValues.identifier || !formValues.password) {
+        setSignInErrors({
+          identifier: !formValues.identifier
+            ? "Email or username is required"
+            : "",
+          password: !formValues.password ? "Password is required" : "",
+        });
+        toast.error("Please fill in all required fields");
         return;
       }
 
@@ -93,6 +114,7 @@ export default function AuthenticationForms() {
           password: formValues.password,
         }),
       });
+
       const preflightData = await preflight.json().catch(() => null);
 
       if (!preflight.ok || !preflightData?.success) {
@@ -141,6 +163,8 @@ export default function AuthenticationForms() {
         });
       }
     } catch (error) {
+      console.error("Sign in error:", error);
+
       if (error instanceof TypeError && error.message.includes("fetch")) {
         toast.error(
           "Network error. Please check your connection and try again.",
@@ -171,19 +195,29 @@ export default function AuthenticationForms() {
 
     try {
       const formValues = {
-        username: formData.get("username") as string,
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
+        username: (formData.get("userName") as string)?.trim() || "",
+        email: (formData.get("email") as string)?.trim() || "",
+        password: (formData.get("password") as string) || "",
       };
 
       const validation = signUpSchema.safeParse(formValues);
 
       if (!validation.success) {
-        setSignUpErrors(mapIssuesToErrors(validation.error.issues));
-        const firstError =
-          validation.error.issues[0]?.message ||
-          "Please fix the validation errors";
-        toast.error(firstError);
+        console.log("Validation failed:", validation.error.issues);
+        console.log("Form values:", formValues);
+        const errors = mapIssuesToErrors(validation.error.issues);
+        setSignUpErrors(errors);
+        toast.error("Please fix the validation errors");
+        return;
+      }
+
+      if (!formValues.username || !formValues.email || !formValues.password) {
+        setSignUpErrors({
+          username: !formValues.username ? "Username is required" : "",
+          email: !formValues.email ? "Email is required" : "",
+          password: !formValues.password ? "Password is required" : "",
+        });
+        toast.error("Please fill in all required fields");
         return;
       }
 
@@ -193,7 +227,6 @@ export default function AuthenticationForms() {
       if (response.success) {
         const responseData = response.data as AuthData;
         const { verification_code, user } = responseData;
-
         if (!isValidSignupResponse(user, verification_code)) {
           toast.error("Account created but verification setup failed", {
             id: "signup",
@@ -220,7 +253,8 @@ export default function AuthenticationForms() {
           });
         }
       }
-    } catch {
+    } catch (error) {
+      console.error("Sign up error:", error);
       toast.error("An unexpected error occurred. Please try again.", {
         id: "signup",
       });
@@ -230,38 +264,65 @@ export default function AuthenticationForms() {
   };
 
   return (
-    <div className="signin-signup">
-      {/* Sign In Form */}
-      <form action={handleSignIn} className="sign-in-form" noValidate>
-        <h2 className="title text-black dark:text-white">Sign in</h2>
+    <div className="w-full max-w-md mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
+          Welcome to EIT
+        </h1>
+        <h2 className="text-xl font-semibold text-foreground/80">
+          {isSignUp ? "Create Account" : "Sign In"}
+        </h2>
+      </div>
+
+      <form
+        action={isSignUp ? handleSignUp : handleSignIn}
+        className=""
+        noValidate
+      >
+        {isSignUp && (
+          <FormItem>
+            <UsernameField />
+            {signUpErrors.username && (
+              <FormMessage className="text-red-500 text-sm mt-1">
+                {signUpErrors.username}
+              </FormMessage>
+            )}
+          </FormItem>
+        )}
+
         <FormItem>
           <div className="input-field bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
             <MdOutlineMail className="icon text-gray-600 dark:text-gray-300" />
             <input
-              name="identifier"
-              type="text"
-              placeholder="Email or Username"
+              name={isSignUp ? "email" : "identifier"}
+              type={isSignUp ? "email" : "text"}
+              placeholder={isSignUp ? "Email" : "Email or Username"}
               required
-              autoComplete="username"
-              disabled={isSignInLoading}
-              aria-invalid={Boolean(signInErrors.identifier)}
-              aria-describedby={
-                signInErrors.identifier ? "signin-identifier-error" : undefined
-              }
-              className={`${signInErrors.identifier ? "border-red-500" : ""} ${
-                isSignInLoading ? "opacity-50 cursor-not-allowed" : ""
+              autoComplete={isSignUp ? "email" : "username"}
+              disabled={isSignUp ? isSignUpLoading : isSignInLoading}
+              aria-invalid={Boolean(
+                isSignUp ? signUpErrors.email : signInErrors.identifier
+              )}
+              className={`${
+                isSignUp
+                  ? signUpErrors.email
+                  : signInErrors.identifier
+                  ? "border-red-500"
+                  : ""
+              } ${
+                (isSignUp ? isSignUpLoading : isSignInLoading)
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
               }`}
             />
           </div>
-          {signInErrors.identifier && (
-            <FormMessage
-              id="signin-identifier-error"
-              className="text-red-500 text-sm mt-1"
-            >
-              {signInErrors.identifier}
+          {(isSignUp ? signUpErrors.email : signInErrors.identifier) && (
+            <FormMessage className="text-red-500 text-sm mt-1">
+              {isSignUp ? signUpErrors.email : signInErrors.identifier}
             </FormMessage>
           )}
         </FormItem>
+
         <FormItem>
           <PasswordToggle
             fieldName="password"
@@ -270,93 +331,55 @@ export default function AuthenticationForms() {
               <RiLockPasswordLine className="icon text-gray-600 dark:text-gray-300" />
             }
           />
-          {signInErrors.password && (
+          {(isSignUp ? signUpErrors.password : signInErrors.password) && (
             <FormMessage className="text-red-500 text-sm mt-1">
-              {signInErrors.password}
+              {isSignUp ? signUpErrors.password : signInErrors.password}
             </FormMessage>
           )}
         </FormItem>
-        <div className="text-right mb-4">
-          <p className="text-sm text-muted-foreground">
-            Forgot password?{" "}
+
+        {!isSignUp && (
+          <div className="text-right">
             <a
               href="/authentication/reset-password"
-              className="text-primary cursor-pointer"
+              className="text-sm text-foreground/70 hover:text-primary cursor-pointer hover:underline transition-colors"
             >
-              Reset it
+              Forgot password?
             </a>
-            .
-          </p>
-        </div>
+          </div>
+        )}
+
         <Button
           type="submit"
-          disabled={isSignInLoading}
-          className="w-48 mx-auto"
+          disabled={isSignUp ? isSignUpLoading : isSignInLoading}
+          className="w-full my-6 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSignInLoading ? "Signing In..." : "Sign In"}
-        </Button>{" "}
-        <SocialAuth />
+          {isSignUp
+            ? isSignUpLoading
+              ? "Creating Account..."
+              : "Sign Up"
+            : isSignInLoading
+            ? "Signing In..."
+            : "Sign In"}
+        </Button>
+
+        <div className="">
+          <SocialAuth />
+        </div>
       </form>
 
-      {/* Sign Up Form */}
-      <form action={handleSignUp} className="sign-up-form" noValidate>
-        <h2 className="title text-black dark:text-white">Sign up</h2>
-        <FormItem>
-          <UsernameField />
-          {signUpErrors.username && (
-            <FormMessage className="text-red-500 text-sm mt-1">
-              {signUpErrors.username}
-            </FormMessage>
-          )}
-        </FormItem>
-        <FormItem>
-          <div className="input-field bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
-            <MdOutlineMail className="icon text-gray-600 dark:text-gray-300" />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              required
-              autoComplete="email"
-              aria-invalid={Boolean(signUpErrors.email)}
-              aria-describedby={
-                signUpErrors.email ? "signup-email-error" : undefined
-              }
-              className={signUpErrors.email ? "border-red-500" : ""}
-            />
-          </div>
-          {signUpErrors.email && (
-            <FormMessage
-              id="signup-email-error"
-              className="text-red-500 text-sm mt-1"
-            >
-              {signUpErrors.email}
-            </FormMessage>
-          )}
-        </FormItem>
-        <FormItem>
-          <PasswordToggle
-            fieldName="password"
-            placeholder="Password"
-            icon={
-              <RiLockPasswordLine className="icon text-gray-600 dark:text-gray-300" />
-            }
-          />
-          {signUpErrors.password && (
-            <FormMessage className="text-red-500 text-sm mt-1">
-              {signUpErrors.password}
-            </FormMessage>
-          )}
-        </FormItem>
-        <Button
-          type="submit"
-          disabled={isSignUpLoading}
-          className="w-48 mx-auto"
-        >
-          {isSignUpLoading ? "Creating Account..." : "Sign Up"}
-        </Button>{" "}
-        <SocialAuth />
-      </form>
+      <div className="text-center mt-8">
+        <p className="text-foreground/70">
+          {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+          <button
+            type="button"
+            onClick={() => setMode(isSignUp ? "signin" : "signup")}
+            className="text-primary font-semibold cursor-pointer hover:underline focus:outline-none transition-colors"
+          >
+            {isSignUp ? "Sign in" : "Sign up"}
+          </button>
+        </p>
+      </div>
     </div>
   );
 }
