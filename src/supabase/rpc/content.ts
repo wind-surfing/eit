@@ -23,6 +23,29 @@ export interface Blog {
   };
 }
 
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  deployed_url?: string;
+  code_url?: string;
+  screenshots: string[];
+  status: "submitted" | "pending" | "approved" | "rejected";
+  tags: string[];
+  creators: string[];
+  creator_roles: Record<string, string>;
+  lead_creator: string;
+  created_at: string;
+  updated_at: string;
+  approved_at?: string;
+  lead_creator_info?: {
+    id: string;
+    username: string;
+    displayName: string;
+    avatar?: string;
+  };
+}
+
 export interface CreateBlogData {
   title: string;
   description: string;
@@ -45,6 +68,13 @@ export interface UpdateBlogData {
 
 export interface BlogsResponse {
   blogs: Blog[];
+  total_count: number;
+  limit: number;
+  offset: number;
+}
+
+export interface ProjectsResponse {
+  projects: Project[];
   total_count: number;
   limit: number;
   offset: number;
@@ -200,5 +230,49 @@ export async function deleteBlog(blogId: string) {
   } catch (error) {
     console.error("Error deleting blog:", error);
     return { success: false, error: "Failed to delete blog" };
+  }
+}
+
+export async function getProjects(
+  limit: number = 20,
+  offset: number = 0,
+  approvedOnly: boolean = true
+): Promise<{ success: boolean; data?: ProjectsResponse; error?: string }> {
+  try {
+    const { data, error } = await supabase.rpc("get_projects", {
+      p_limit: limit,
+      p_offset: offset,
+      p_approved_only: approvedOnly,
+    });
+
+    if (error) {
+      console.error("Error fetching projects:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return { success: false, error: "Failed to fetch projects" };
+  }
+}
+
+export async function getProjectById(
+  projectId: string
+): Promise<{ success: boolean; project?: Project; error?: string }> {
+  try {
+    const { data, error } = await supabase.rpc("get_project_by_id", {
+      p_project_id: projectId,
+    });
+
+    if (error) {
+      console.error("Error fetching project:", error);
+      return { success: false, error: error.message };
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    return { success: false, error: "Failed to fetch project" };
   }
 }
