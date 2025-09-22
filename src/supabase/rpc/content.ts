@@ -46,6 +46,85 @@ export interface Project {
   };
 }
 
+export interface UserProfile {
+  id: string;
+  username: string;
+  displayName?: string;
+  bio?: string;
+  avatar?: string;
+  role: string;
+  skills: string[];
+  createdAt: string;
+}
+
+export interface UserBlog {
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+  featured_image?: string;
+  tags: string[];
+  created_at: string;
+  published_at?: string;
+}
+
+export interface UserProject {
+  id: string;
+  title: string;
+  description: string;
+  deployed_url?: string;
+  code_url?: string;
+  screenshots: string[];
+  tags: string[];
+  creators: string[];
+  creator_roles: Record<string, string>;
+  created_at: string;
+  approved_at?: string;
+}
+
+export interface UserResource {
+  id: string;
+  title: string;
+  description: string;
+  resource_type: string;
+  url: string;
+  difficulty_level?: string;
+  tags: string[];
+  created_at: string;
+}
+
+export interface UserEvent {
+  id: string;
+  title: string;
+  description: string;
+  event_type: string;
+  mode: string;
+  start_date: string;
+  end_date?: string;
+  location?: string;
+  registration_deadline?: string;
+  max_participants?: number;
+  tags: string[];
+  created_at: string;
+}
+
+export interface UserBadge {
+  id: string;
+  name: string;
+  description: string;
+  icon?: string;
+  color?: string;
+}
+
+export interface UserPublicProfileData {
+  user: UserProfile;
+  blogs: UserBlog[];
+  projects: UserProject[];
+  resources: UserResource[];
+  events: UserEvent[];
+  badges: UserBadge[];
+}
+
 export interface CreateBlogData {
   title: string;
   description: string;
@@ -274,5 +353,40 @@ export async function getProjectById(
   } catch (error) {
     console.error("Error fetching project:", error);
     return { success: false, error: "Failed to fetch project" };
+  }
+}
+
+export async function getUserPublicProfile(
+  username: string
+): Promise<{ success: boolean; data?: UserPublicProfileData; error?: string }> {
+  try {
+    const { data, error } = await supabase.rpc("get_user_public_profile", {
+      p_username: username,
+    });
+
+    if (error) {
+      console.error("Error fetching user profile:", error);
+      return { success: false, error: error.message };
+    }
+
+    // The PostgreSQL function returns the data directly
+    if (data && data.success) {
+      return {
+        success: true,
+        data: {
+          user: data.user,
+          blogs: data.blogs || [],
+          projects: data.projects || [],
+          resources: data.resources || [],
+          events: data.events || [],
+          badges: data.badges || [],
+        },
+      };
+    } else {
+      return { success: false, error: data?.error || "User not found" };
+    }
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return { success: false, error: "Failed to fetch user profile" };
   }
 }
