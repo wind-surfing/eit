@@ -115,6 +115,8 @@ const ProjectsPage = async () => {
         </h1>
       </div>
 
+      <div className="glow absolute -z-10 aspect-square w-full max-w-xl rounded-full bg-primary/20 blur-3xl filter" />
+
       {error ? (
         <div className="no-projects">
           <p className="text-xl mb-2">Unable to load projects</p>

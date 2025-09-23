@@ -195,7 +195,7 @@ export default function AuthenticationForms({
 
     try {
       const formValues = {
-        username: (formData.get("userName") as string)?.trim() || "",
+        username: (formData.get("username") as string)?.trim() || "",
         email: (formData.get("email") as string)?.trim() || "",
         password: (formData.get("password") as string) || "",
       };

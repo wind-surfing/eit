@@ -66,6 +66,8 @@ const Blogs = async (): Promise<JSX.Element> => {
         EIT Blogs
       </h2>
 
+      <div className="glow absolute -z-10 aspect-square w-full max-w-xl rounded-full bg-primary/20 blur-3xl filter" />
+
       <div className="mt-20 grid gap-16">
         {allBlogs.map((blog, index) => (
           <div

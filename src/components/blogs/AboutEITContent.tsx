@@ -141,10 +141,8 @@ const SocialLinks = ({
 
 const AboutEITContent = () => {
   return (
-    <div className="prose prose-lg prose-invert max-w-none">
-      <h2 className="text-3xl font-bold text-foreground mb-6">
-        About EIT (Entrepreneurship and Innovation Team)
-      </h2>
+    <div className="prose prose-lg prose-invert max-w-none mt-16">
+
       <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
         The Entrepreneurship and Innovation Team (EIT) is a dynamic community of
         tech enthusiasts, innovators, and future entrepreneurs dedicated to
